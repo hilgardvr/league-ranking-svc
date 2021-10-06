@@ -1,4 +1,4 @@
-Commandline program to read match results and process the results.
+Command line program to read match results and process the results.
 
 To run the program you will have to have go installed.
 
