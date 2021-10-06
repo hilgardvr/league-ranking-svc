@@ -14,8 +14,8 @@ const DRAW = 1
 const LOOSE = 0
 
 type tableTeam struct {
-	teamName	string
-	points		int 
+	teamName string
+	points   int
 }
 
 func sortTable(unsortedTable map[string]int) []tableTeam {
@@ -36,8 +36,8 @@ func sortTable(unsortedTable map[string]int) []tableTeam {
 func getTeamScore(result string) (string, int) {
 	trimResult := strings.TrimSpace(result)
 	lastSpace := strings.LastIndex(trimResult, " ")
-	teamName := trimResult[0:lastSpace]
-	teamGoals := trimResult[lastSpace + 1:]
+	teamName := strings.TrimSpace(trimResult[0:lastSpace])
+	teamGoals := trimResult[lastSpace+1:]
 	goals, err := strconv.Atoi(string(teamGoals))
 	if err != nil {
 		panic(fmt.Sprintf("Could not parse teams score as int: %s", err.Error()))
@@ -69,12 +69,11 @@ func readScores(file *os.File) map[string]int {
 	return totals
 }
 
-
 func main() {
 	args := os.Args
 	var totals map[string]int
 	if len(args) <= 1 {
-		fmt.Println("No file specified, reading from commandline. Type `quit` to exit")
+		fmt.Println("No file specified, reading from commandline. Type `quit` to end.")
 		totals = readScores(os.Stdin)
 	} else {
 		file, err := os.Open(args[1])
@@ -87,6 +86,6 @@ func main() {
 	}
 	sortedTotals := sortTable(totals)
 	for i, v := range sortedTotals {
-		fmt.Printf("%d. %s\t%d\n", i + 1, v.teamName, v.points)
+		fmt.Printf("%d. %s\t%d\n", i+1, v.teamName, v.points)
 	}
 }
